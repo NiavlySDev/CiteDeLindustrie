@@ -2,17 +2,15 @@ package fr.niavlys.dev.ci.economy;
 
 import fr.niavlys.dev.bn.main.BigNumbers;
 import fr.niavlys.dev.ci.donnees.BDD;
-import fr.niavlys.dev.ci.grades.GradeType;
+import fr.niavlys.dev.ci.players.grades.GradeType;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.players.Grade;
 import fr.niavlys.dev.ci.traduction.Traduction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +32,12 @@ public class EconomyC implements CommandExecutor, TabCompleter {
             System.err.println("EconomyC: CIPlayer null (EconomyC:33)");
             return false;
         }
-        if(player.getGrade().hasPerm(GradeType.RESPONSABLE)){
+        if(!player.getGrade().hasPerm(GradeType.RESPONSABLE)){
             Messages.send(Traduction.NoPerm, MessageType.Error, p);
             return false;
         }
 
-        if(args.length != 4){
+        if(args.length != 5){
             Messages.send(Traduction.PasAssezArg, MessageType.Error, p);
             return false;
         }
@@ -74,7 +72,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
         String amountStr = args[3];
         try {
             int value = Integer.parseInt(amountStr);
-            if(value <= 0){
+            if(value < 0){
                 Messages.send(Traduction.NombreNegatif, MessageType.Error, p);
                 return false;
             }

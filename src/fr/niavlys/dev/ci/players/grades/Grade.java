@@ -1,6 +1,4 @@
-package fr.niavlys.dev.ci.players;
-
-import fr.niavlys.dev.ci.grades.GradeType;
+package fr.niavlys.dev.ci.players.grades;
 
 public class Grade {
 
@@ -30,7 +28,7 @@ public class Grade {
         this.grade = previous;
     }
     public boolean hasPerm(GradeType type){
-        return this.grade.hasPerm(type);
+        return this.grade.ordinal() >= type.ordinal();
     }
     public GradeType getNext(){
         return this.grade.getNext(this.grade);

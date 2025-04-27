@@ -1,7 +1,7 @@
 package fr.niavlys.dev.ci.main;
 
 import fr.niavlys.dev.ci.donnees.BDD;
-import fr.niavlys.dev.ci.grades.GradeType;
+import fr.niavlys.dev.ci.players.grades.GradeType;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
@@ -75,8 +75,9 @@ public class GradeC implements CommandExecutor, TabCompleter {
             if(action.equalsIgnoreCase("rankup")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade", gradeName);
+                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
+                t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
                 msg = Messages.build(Traduction.GradeChangePlayer, MessageType.Success, player).replaceAll("%grade%", gradeName);
                 Messages.send(msg, p);
                 return true;
@@ -84,8 +85,9 @@ public class GradeC implements CommandExecutor, TabCompleter {
             else if(action.equalsIgnoreCase("derank")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade", gradeName);
+                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
+                t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
                 msg = Messages.build(Traduction.GradeChangePlayer, MessageType.Success, player).replaceAll("%grade%", gradeName);
                 Messages.send(msg, p);
                 return true;
@@ -126,6 +128,7 @@ public class GradeC implements CommandExecutor, TabCompleter {
             target.getGrade().setGrade(grade);
             String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
             Messages.send(msg, t);
+            t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
             System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
             return true;
         }
@@ -137,17 +140,20 @@ public class GradeC implements CommandExecutor, TabCompleter {
             if(action.equalsIgnoreCase("rankup")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade", gradeName);
+                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
+                t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
                 System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
                 return true;
             }
             else if(action.equalsIgnoreCase("derank")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade", gradeName);
+                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
+                t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
                 System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
+
                 return true;
             }
             else {
@@ -174,8 +180,13 @@ public class GradeC implements CommandExecutor, TabCompleter {
                 choice.add("derank");
                 break;
             case 3:
-                for(GradeType grade : GradeType.values()){
-                    choice.add(grade.getDisplayName());
+                if(args[1].equalsIgnoreCase("set")){
+                    for(GradeType grade : GradeType.values()){
+                        choice.add(grade.getDisplayName());
+                    }
+                }
+                else{
+                    return choice;
                 }
         }
         return choice;

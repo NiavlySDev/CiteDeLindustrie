@@ -14,7 +14,7 @@ public class LeaveEvent implements Listener {
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
         player.savePlayer();
         System.out.println(player.getName() + " a quitte le serveur!");
-        e.setQuitMessage(player.getGrade().getGrade().getColor() + "["+player.getGrade().getGrade().getDisplayName()+"]" + player.getName() + " a quitté le serveur.");
+        e.setQuitMessage(player.getGrade().getGrade().getColor() + "["+player.getGrade().getGrade().getDisplayName()+"] " + player.getName() + " a quitté le serveur.");
     }
 
 }
