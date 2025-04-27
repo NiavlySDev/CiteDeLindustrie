@@ -1,5 +1,5 @@
 name: CiteDeLindustrie
-version: 0.1
+version: 0.2
 main: fr.niavlys.dev.ci.main.Main
 author: NiavlyS
 api-version: 1.21
