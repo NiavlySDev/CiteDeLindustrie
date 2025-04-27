@@ -10,10 +10,10 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
-        CIPlayer player = new CIPlayer();
+        CIPlayer player = new CIPlayer(p);
         player.loadPlayer();
         System.out.println(player.getName() + " a rejoint le serveur!");
-        e.setJoinMessage(player.getGrade().getGrade().getColor() + "["+player.getGrade().getGrade().getDisplayName()+"]" + player.getName() + " a rejoin le serveur.");
+        e.setJoinMessage(player.getGrade().getGrade().getColor() + "["+player.getGrade().getGrade().getDisplayName()+"] " + player.getName() + " a rejoin le serveur.");
 
     }
 }

@@ -1,4 +1,4 @@
-package fr.niavlys.dev.ci.grades;
+package fr.niavlys.dev.ci.players.grades;
 
 import org.bukkit.ChatColor;
 
@@ -14,8 +14,8 @@ public enum GradeType {
     VISIONNAIRE("Visionnaire", ChatColor.GOLD, "VIS"),
     CHEFPROJET("ChefProjet", ChatColor.GREEN, "CPJ"),
     SUPERVISEUR("Superviseur", ChatColor.BLUE, "SUP"),
-    RESPONSABLE("Responsable", ChatColor.RED, "RES"),
-    ORGANISATEUR("Organisateur", ChatColor.GOLD, "ORG");
+    RESPONSABLE("Responsable", ChatColor.GOLD, "RES"),
+    ORGANISATEUR("Organisateur", ChatColor.RED, "ORG");
 
     private final String displayName;
     private final ChatColor color;

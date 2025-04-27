@@ -24,7 +24,7 @@ public enum Traduction {
     Success("Succès", "Success"),
     // Messages
     ErreurPasAssezShop("Vous n'avez pas assez de cet item dans votre inventaire pour le vendre", "You don't have enough items in your inventory to sell this item"),
-    ValidationVente("Vous avez vendu vos items dans le shop", "You sold your items in the shop"),
+    ValidationVente("Vous avez vendu vos items dans le shop pour %argent%", "You sold your items in the shop for %argent%"),
     JoueurNonCo("Le joueur n'est pas connecté ou n'existe pas!", "The player is not connected or does not exist!"),
     PasAssezArg("Vous n'avez pas rentré assez d'arguments", "You didn't enter enough arguments"),
     TooMuchArg("Vous avez rentrée trop d'arguments dans la commande !", "You entered too many arguments in the command!"),
@@ -40,6 +40,9 @@ public enum Traduction {
     NotLanguage("Le language demandé n'est pas un langage valide !", "The requested language is not a valid language!"),
     LangueChangee("Vous avez changé votre langage en %lang%", "You changed your language to %lang%"),
     NomChange("Vous avez changé votre nom en %nom%", "You changed your name to %nom%"),
+    MoneyAffichage("Vous avez %amount% %moneyType%", "You have %amount% %moneyType%"),
+    MoneyAffichageOther("Le joueur a %amount% %moneyType%", "The player has %amount% %moneyType%"),
+    ShopPriceReloaded("Vous avez rechargé les prix du shop !", "You have reloaded the shop prices!"),
     ;
 
     private final String fr;

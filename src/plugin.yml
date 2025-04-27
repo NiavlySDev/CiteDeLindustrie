@@ -1,5 +1,5 @@
 name: CiteDeLindustrie
-version: 0.1
+version: 0.2
 main: fr.niavlys.dev.ci.main.Main
 author: NiavlyS
 api-version: 1.21
@@ -17,3 +17,9 @@ commands:
   settings:
     description: Player settings command
     usage: /settings <language|nick> <value>
+  money:
+    description: Player Money command
+    usage: /money <type> <player>
+  reloadShopPrice:
+    description: Reload Shop Prices
+    usage: /reloadShopPrice

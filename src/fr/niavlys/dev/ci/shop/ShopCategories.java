@@ -15,7 +15,7 @@ import java.util.Locale;
 public enum ShopCategories {
     Blocs(Traduction.CategoryBlocs, ChatColor.GRAY, Material.GRASS_BLOCK, 1),
     Nourriture(Traduction.CategoryNourriture, ChatColor.GREEN, Material.COOKED_BEEF, 2),
-    Minerais(Traduction.CategoryMinerais, ChatColor.GOLD, Material.IRON_INGOT, 3),
+    Minerais(Traduction.CategoryMinerais, ChatColor.GOLD, Material.IRON_INGOT, 4),
     Mobs(Traduction.CategoryMobs, ChatColor.LIGHT_PURPLE, Material.SPIDER_EYE, 6),
     Autres(Traduction.CategoryAutres, ChatColor.BLUE, Material.SCAFFOLDING, 7);
 
@@ -53,7 +53,7 @@ public enum ShopCategories {
     }
 
     public static Inventory buildHome(CIPlayer player){
-        Inventory home = Bukkit.createInventory(null, 9);
+        Inventory home = Bukkit.createInventory(null, 9, "Shop");
         for(ShopCategories cat : ShopCategories.values()){
             ItemStack icon = new ItemStack(cat.getIcon());
             ItemMeta iconMeta = icon.getItemMeta();
@@ -67,8 +67,8 @@ public enum ShopCategories {
         return home;
     }
 
-    public Inventory buildShop(CIPlayer player, ShopCategories category){
-        Inventory shop = Bukkit.createInventory(null, 54, this.getColor() + this.getName().getByLang(player.getLang()));
+    public static Inventory buildShop(CIPlayer player, ShopCategories category){
+        Inventory shop = Bukkit.createInventory(null, 54, category.getColor() + category.getName().getByLang(player.getLang()));
         for(ShopItem item : ShopItem.values()){
             if(item.getCategory() != category){
                 continue;
