@@ -1,11 +1,9 @@
 package fr.niavlys.dev.ci.players.grades;
 
 import fr.niavlys.dev.ci.donnees.BDD;
-import fr.niavlys.dev.ci.players.grades.GradeType;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.traduction.Traduction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -32,13 +30,13 @@ public class GradeC implements CommandExecutor, TabCompleter {
             return false;
         }
         if(!player.getGrade().hasPerm(GradeType.ORGANISATEUR)){
-            Messages.send(Traduction.NoPerm, MessageType.Error, p);
+            Messages.send("Vous n'avez pas la permission pour faire cet action", MessageType.Error, p);
             return false;
         }
 
         String targetName = args[0];
         if(Bukkit.getPlayer(targetName) == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
             return false;
         }
 
@@ -46,7 +44,7 @@ public class GradeC implements CommandExecutor, TabCompleter {
 
         CIPlayer target = BDD.getPlayer(t.getUniqueId());
         if(target == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
             return false;
         }
 
@@ -54,49 +52,49 @@ public class GradeC implements CommandExecutor, TabCompleter {
         if(action.equalsIgnoreCase("set")){
             String gradeName = args[2];
             if(GradeType.getByName(gradeName) == null){
-                Messages.send(Traduction.MauvaisGrade, MessageType.Error, p);
+                Messages.send("Le grade que vous avez choisi n'est pas valide", MessageType.Error, p);
                 return false;
             }
 
             GradeType grade = GradeType.getByName(gradeName);
 
             target.getGrade().setGrade(grade);
-            String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+            String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
             Messages.send(msg, t);
             target.reloadScoreboard();
-            msg = Messages.build(Traduction.GradeChangePlayer, MessageType.Success, player).replaceAll("%grade%", gradeName);
+            msg = Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, player).replaceAll("%grade%", gradeName);
             Messages.send(msg, p);
             return true;
         }
         else{
             if(args.length > 2){
-                Messages.send(Traduction.TooMuchArg, MessageType.Error, p);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
                 return false;
             }
             if(action.equalsIgnoreCase("rankup")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
                 t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
-                msg = Messages.build(Traduction.GradeChangePlayer, MessageType.Success, player).replaceAll("%grade%", gradeName);
+                msg = Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, player).replaceAll("%grade%", gradeName);
                 Messages.send(msg, p);
                 return true;
             }
             else if(action.equalsIgnoreCase("derank")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
                 t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
-                msg = Messages.build(Traduction.GradeChangePlayer, MessageType.Success, player).replaceAll("%grade%", gradeName);
+                msg = Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, player).replaceAll("%grade%", gradeName);
                 Messages.send(msg, p);
                 return true;
             }
             else {
-                Messages.send(Traduction.BadArg, MessageType.Error, p);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
                 return false;
             }
         }
@@ -105,7 +103,7 @@ public class GradeC implements CommandExecutor, TabCompleter {
     private boolean Console(ConsoleCommandSender s, String[] args) {
         String targetName = args[0];
         if(Bukkit.getPlayer(targetName) == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, null);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, null);
             return false;
         }
 
@@ -114,7 +112,7 @@ public class GradeC implements CommandExecutor, TabCompleter {
         // Check Target
         CIPlayer target = BDD.getPlayer(t.getUniqueId());
         if(target == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, null);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, null);
             return false;
         }
 
@@ -122,48 +120,48 @@ public class GradeC implements CommandExecutor, TabCompleter {
         if(action.equalsIgnoreCase("set")){
             String gradeName = args[2];
             if(GradeType.getByName(gradeName) == null){
-                Messages.send(Traduction.MauvaisGrade, MessageType.Error, null);
+                Messages.send("Le grade que vous avez choisi n'est pas valide", MessageType.Error, null);
                 return false;
             }
 
             GradeType grade = GradeType.getByName(gradeName);
 
             target.getGrade().setGrade(grade);
-            String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+            String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
             Messages.send(msg, t);
             target.reloadScoreboard();
             t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
-            System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
+            System.out.println(Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, null).replaceAll("%grade%", gradeName));
             return true;
         }
         else{
             if(args.length > 2){
-                Messages.send(Traduction.TooMuchArg, MessageType.Error, null);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
                 return false;
             }
             if(action.equalsIgnoreCase("rankup")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
                 t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
-                System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
+                System.out.println(Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, null).replaceAll("%grade%", gradeName));
                 return true;
             }
             else if(action.equalsIgnoreCase("derank")){
                 String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
-                String msg = Messages.build(Traduction.GradeChangeTarget, MessageType.Info, target).replaceAll("%grade%", gradeName);
+                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
                 t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
-                System.out.println(Messages.build(Traduction.GradeChangePlayer, MessageType.Success, null).replaceAll("%grade%", gradeName));
+                System.out.println(Messages.build("Vous avez changé le grade du joueur pour %grade%", MessageType.Success, null).replaceAll("%grade%", gradeName));
 
                 return true;
             }
             else {
-                Messages.send(Traduction.BadArg, MessageType.Error, null);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
                 return false;
             }
         }

@@ -14,5 +14,7 @@ commands:
     description: Economy Command
   money:
     description: Money Command
-  reloadShopPrice:
+  reloadshopprice:
     description: ReloadShopPrices Command
+  convertmoney:
+    description: Convert Money Command

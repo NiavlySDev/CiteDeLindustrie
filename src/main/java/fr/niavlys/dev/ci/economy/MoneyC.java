@@ -4,7 +4,6 @@ import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.traduction.Traduction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import javax.xml.transform.stax.StAXResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +32,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
         List<String> types = Arrays.asList("bronze", "argent", "or");
         String type = args[0];
         if(!types.contains(type)){
-            Messages.send(Traduction.BadArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
 
@@ -42,7 +40,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             if(type.equalsIgnoreCase("bronze")){
                 Messages.send(
                         Messages.build(
-                                Traduction.MoneyAffichage,
+                                "Vous avez %amount% %moneyType%",
                                 MessageType.Info,
                                 player
                         )
@@ -55,7 +53,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             else if(type.equalsIgnoreCase("argent")){
                 Messages.send(
                         Messages.build(
-                                        Traduction.MoneyAffichage,
+                                        "Vous avez %amount% %moneyType%",
                                         MessageType.Info,
                                         player
                                 )
@@ -68,7 +66,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             else if(type.equalsIgnoreCase("or")){
                 Messages.send(
                         Messages.build(
-                                        Traduction.MoneyAffichage,
+                                        "Vous avez %amount% %moneyType%",
                                         MessageType.Info,
                                         player
                                 )
@@ -82,19 +80,19 @@ public class MoneyC implements CommandExecutor, TabCompleter {
         else if(args.length == 2){
             String targetName = args[1];
             if(Bukkit.getPlayer(targetName) == null){
-                Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+                Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
                 return false;
             }
             Player t = Bukkit.getPlayer(targetName);
             CIPlayer target = BDD.getPlayer(t.getUniqueId());
             if(target == null){
-                Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+                Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
                 return false;
             }
             if(type.equalsIgnoreCase("bronze")){
                 Messages.send(
                         Messages.build(
-                                        Traduction.MoneyAffichageOther,
+                                        "Le joueur a %amount% %moneyType%",
                                         MessageType.Info,
                                         player
                                 )
@@ -107,7 +105,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             else if(type.equalsIgnoreCase("argent")){
                 Messages.send(
                         Messages.build(
-                                        Traduction.MoneyAffichageOther,
+                                        "Le joueur a %amount% %moneyType%",
                                         MessageType.Info,
                                         player
                                 )
@@ -120,7 +118,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             else if(type.equalsIgnoreCase("or")){
                 Messages.send(
                         Messages.build(
-                                        Traduction.MoneyAffichageOther,
+                                        "Le joueur a %amount% %moneyType%",
                                         MessageType.Info,
                                         player
                                 )
@@ -132,7 +130,7 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             }
         }
         else{
-            Messages.send(Traduction.TooMuchArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
         return false;

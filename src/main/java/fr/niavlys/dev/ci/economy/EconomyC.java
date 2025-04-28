@@ -6,7 +6,6 @@ import fr.niavlys.dev.ci.players.grades.GradeType;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.traduction.Traduction;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -33,39 +32,39 @@ public class EconomyC implements CommandExecutor, TabCompleter {
             return false;
         }
         if(!player.getGrade().hasPerm(GradeType.RESPONSABLE)){
-            Messages.send(Traduction.NoPerm, MessageType.Error, p);
+            Messages.send("Vous n'avez pas la permission pour faire cet action", MessageType.Error, p);
             return false;
         }
 
         if(args.length != 5){
-            Messages.send(Traduction.PasAssezArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
 
         String targetName = args[0];
         if(Bukkit.getPlayer(targetName) == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
             return false;
         }
 
         Player t = Bukkit.getPlayer(targetName);
         CIPlayer target = BDD.getPlayer(t.getUniqueId());
         if(target == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, p);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
             return false;
         }
 
         String type = args[1];
         List<String> types = List.of("bronze", "argent", "or");
         if(!types.contains(type)){
-            Messages.send(Traduction.BadArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
 
         String action = args[2];
         List<String> actions = List.of("add", "remove", "set");
         if(!actions.contains(action)){
-            Messages.send(Traduction.BadArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
 
@@ -73,11 +72,11 @@ public class EconomyC implements CommandExecutor, TabCompleter {
         try {
             int value = Integer.parseInt(amountStr);
             if(value < 0){
-                Messages.send(Traduction.NombreNegatif, MessageType.Error, p);
+                Messages.send("Vous ne pouvez pas entrer de nombre négatif ou nul!", MessageType.Error, p);
                 return false;
             }
         } catch (NumberFormatException e) {
-            Messages.send(Traduction.EntrerUnNombre, MessageType.Error, p);
+            Messages.send("Vous devez entrer un nombre!", MessageType.Error, p);
             return false;
         }
 
@@ -86,7 +85,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
         String sign = args[4];
         List<String> signs = BigNumbers.getSigns();
         if(!signs.contains(sign)){
-            Messages.send(Traduction.BadArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
 
@@ -103,7 +102,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getBronze().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, p);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
                 return false;
             }
         }
@@ -118,7 +117,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getArgent().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, p);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
                 return false;
             }
         }
@@ -133,20 +132,20 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getOr().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, p);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
                 return false;
             }
         }
         else{
-            Messages.send(Traduction.BadArg, MessageType.Error, p);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
             return false;
         }
-        Messages.send(Messages.build(Traduction.MoneyChangeTarget, MessageType.Info, target)
+        Messages.send(Messages.build("Vous avez été %action% de %amount% %moneyType% par un administrateur!", MessageType.Info, target)
                         .replaceAll("%amount%", amount.toString())
                         .replaceAll("%action%", action)
                         .replaceAll("%moneyType%", type)
                 , t);
-        Messages.send(Messages.build(Traduction.MoneyChangePlayer, MessageType.Success, player)
+        Messages.send(Messages.build("Vous avez %action% %amount% %moneyType% au joueur!", MessageType.Success, player)
                         .replaceAll("%amount%", amount.toString())
                         .replaceAll("%action%", action)
                         .replaceAll("%moneyType%", type)
@@ -157,34 +156,34 @@ public class EconomyC implements CommandExecutor, TabCompleter {
 
     private boolean Console(ConsoleCommandSender s, String[] args) {
         if(args.length != 4){
-            Messages.send(Traduction.PasAssezArg, MessageType.Error, null);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
             return false;
         }
 
         String targetName = args[0];
         if(Bukkit.getPlayer(targetName) == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, null);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, null);
             return false;
         }
 
         Player t = Bukkit.getPlayer(targetName);
         CIPlayer target = BDD.getPlayer(t.getUniqueId());
         if(target == null){
-            Messages.send(Traduction.JoueurNonCo, MessageType.Error, null);
+            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, null);
             return false;
         }
 
         String type = args[1];
         List<String> types = List.of("bronze", "argent", "or");
         if(!types.contains(type)){
-            Messages.send(Traduction.BadArg, MessageType.Error, null);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
             return false;
         }
 
         String action = args[2];
         List<String> actions = List.of("add", "remove", "set");
         if(!actions.contains(action)){
-            Messages.send(Traduction.BadArg, MessageType.Error, null);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
             return false;
         }
 
@@ -192,11 +191,11 @@ public class EconomyC implements CommandExecutor, TabCompleter {
         try {
             int value = Integer.parseInt(amountStr);
             if(value <= 0){
-                Messages.send(Traduction.NombreNegatif, MessageType.Error, null);
+                Messages.send("Vous ne pouvez pas entrer de nombre négatif ou nul!", MessageType.Error, null);
                 return false;
             }
         } catch (NumberFormatException e) {
-            Messages.send(Traduction.EntrerUnNombre, MessageType.Error, null);
+            Messages.send("Vous devez entrer un nombre!", MessageType.Error, null);
             return false;
         }
 
@@ -205,7 +204,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
         String sign = args[4];
         List<String> signs = BigNumbers.getSigns();
         if(!signs.contains(sign)){
-            Messages.send(Traduction.BadArg, MessageType.Error, null);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
             return false;
         }
 
@@ -222,7 +221,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getBronze().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, null);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
                 return false;
             }
         }
@@ -237,7 +236,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getArgent().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, null);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
                 return false;
             }
         }
@@ -252,20 +251,20 @@ public class EconomyC implements CommandExecutor, TabCompleter {
                 target.getBalance().getOr().set(amount);
             }
             else{
-                Messages.send(Traduction.BadArg, MessageType.Error, null);
+                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
                 return false;
             }
         }
         else{
-            Messages.send(Traduction.BadArg, MessageType.Error, null);
+            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, null);
             return false;
         }
-        Messages.send(Messages.build(Traduction.MoneyChangeTarget, MessageType.Info, target)
+        Messages.send(Messages.build("Vous avez été %action% de %amount% %moneyType% par un administrateur!", MessageType.Info, target)
                         .replaceAll("%amount%", amount.toString())
                         .replaceAll("%action%", action)
                         .replaceAll("%moneyType%", type)
                 , t);
-        Messages.send(Messages.build(Traduction.MoneyChangePlayer, MessageType.Success, null)
+        Messages.send(Messages.build("Vous avez %action% %amount% %moneyType% au joueur!", MessageType.Success, null)
                         .replaceAll("%amount%", amount.toString())
                         .replaceAll("%action%", action)
                         .replaceAll("%moneyType%", type)

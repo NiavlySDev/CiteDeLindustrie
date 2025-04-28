@@ -6,7 +6,6 @@ import fr.niavlys.dev.ci.economy.Balance;
 import fr.niavlys.dev.ci.main.CiteIndustrie;
 import fr.niavlys.dev.ci.players.grades.Grade;
 import fr.niavlys.dev.ci.players.grades.GradeType;
-import fr.niavlys.dev.ci.traduction.Language;
 import fr.niavlys.dev.cm.main.ConfigDataManager;
 import fr.niavlys.dev.gm.main.GradientManager;
 import fr.niavlys.dev.sm.main.ScoreboardManager;
@@ -21,7 +20,6 @@ public class CIPlayer {
 
     private String name;
     private UUID uuid;
-    private Language lang;
     private Grade grade;
     private Balance balance;
     private ScoreboardManager scoreboard;
@@ -29,7 +27,6 @@ public class CIPlayer {
     public CIPlayer(Player p){
         this.name = p.getName();
         this.uuid = p.getUniqueId();
-        this.lang = Language.Français;
         this.grade = new Grade(GradeType.OUVRIER);
         this.balance = new Balance();
         scoreboard = new ScoreboardManager(p, GradientManager.createGradientTitle("Cité de L'industrie", Color.RED, Color.BLUE));
@@ -56,14 +53,8 @@ public class CIPlayer {
     public Grade getGrade() {
         return grade;
     }
-    public Language getLang() {
-        return lang;
-    }
     public void setName(String name) {
         this.name = name;
-    }
-    public void setLang(Language lang) {
-        this.lang = lang;
     }
 
     public void loadPlayer(){
@@ -74,7 +65,6 @@ public class CIPlayer {
             return;
         }
         this.setName((String) players.get(this.uuid.toString(), "nick"));
-        this.setLang(Language.valueOf((String) players.get(this.uuid.toString(), "language")));
         this.grade = new Grade(GradeType.getByInitials((String) players.get(this.uuid.toString(), "grade")));
         this.getBalance().getBronze().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.bronze.entier"), (String) players.get(this.uuid.toString(), "balance.bronze.sign")));
         this.getBalance().getArgent().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.argent.entier"), (String) players.get(this.uuid.toString(), "balance.argent.sign")));
@@ -94,7 +84,6 @@ public class CIPlayer {
         players.set(this.getUuid().toString(), "balance.or.entier", this.getBalance().getOr().getEntier());
         players.set(this.getUuid().toString(), "balance.or.sign", this.getBalance().getOr().getSign());
         players.set(this.getUuid().toString(), "grade", this.getGrade().getGrade().getInitials());
-        players.set(this.getUuid().toString(), "language", this.getLang().name());
         players.set(this.getUuid().toString(), "nick", this.getName());
     }
 }

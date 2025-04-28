@@ -1,11 +1,12 @@
 package fr.niavlys.dev.ci.main;
 
+import fr.niavlys.dev.ci.economy.convertisseur.ConvertMoneyC;
 import fr.niavlys.dev.ci.economy.EconomyC;
 import fr.niavlys.dev.ci.economy.MoneyC;
 import fr.niavlys.dev.ci.message.OnMessage;
 import fr.niavlys.dev.ci.players.*;
 import fr.niavlys.dev.ci.players.grades.GradeC;
-import fr.niavlys.dev.ci.shop.ReloadShopPriceC;
+import fr.niavlys.dev.ci.inventory.GUIListener;
 import fr.niavlys.dev.cm.main.ConfigDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -13,8 +14,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Random;
 
 public final class CiteIndustrie extends JavaPlugin {
 
@@ -37,16 +36,14 @@ public final class CiteIndustrie extends JavaPlugin {
         System.out.println("[" + name + " v" + version + "] Configuration des prix des items de la boutique initialisee.");
 
         loadPlayers();
-        loadShopPrices();
 
-        createCommand("shop", new fr.niavlys.dev.ci.shop.ShopC(), false);
         createCommand("grade", new GradeC(), true);
         createCommand("economy", new EconomyC(), true);
         createCommand("settings", new SettingsC(), true);
         createCommand("money", new MoneyC(), true);
-        createCommand("reloadShopPrice", new ReloadShopPriceC(), false);
+        createCommand("convertmoney", new ConvertMoneyC(), false);
 
-        createEvent(new fr.niavlys.dev.ci.shop.ShopListener());
+        createEvent(new GUIListener());
         createEvent(new JoinEvent());
         createEvent(new LeaveEvent());
         createEvent(new OnMessage());
@@ -89,33 +86,5 @@ public final class CiteIndustrie extends JavaPlugin {
             System.out.println("[" + name + " v" + version + "] Joueur " + player.getName() + " Charge");
         }
         System.out.println("[" + name + " v" + version + "] Joueurs Chargees");
-    }
-
-    public static void loadShopPrices(){
-        long currentTime = System.currentTimeMillis();
-        long lastUpdate = shopPrices.get("shop", "date") != null ? (long) shopPrices.get("shop", "date") : 0;
-
-        if (currentTime - lastUpdate >= 300000) {
-            for (fr.niavlys.dev.ci.shop.ShopItem item : fr.niavlys.dev.ci.shop.ShopItem.values()) {
-                Integer price = new Random().nextInt(1, 1001);
-                price = price * item.getRarete().getCoefficient();
-                shopPrices.set(item.name(), "price", price);
-                System.out.println("ShopItem " + item.name() + " a un prix de " + price + " Euros.");
-            }
-            shopPrices.set("shop", "date", currentTime);
-            System.out.println("ShopItems Charges");
-        }
-    }
-
-    public static void loadShopPriceForced(){
-        long currentTime = System.currentTimeMillis();
-        for (fr.niavlys.dev.ci.shop.ShopItem item : fr.niavlys.dev.ci.shop.ShopItem.values()) {
-            Integer price = new Random().nextInt(1, 1001);
-            price = price * item.getRarete().getCoefficient();
-            shopPrices.set(item.name(), "price", price);
-            System.out.println("ShopItem " + item.name() + " a un prix de " + price + " Euros.");
-        }
-        shopPrices.set("shop", "date", currentTime);
-        System.out.println("ShopItems Charges");
     }
 }
