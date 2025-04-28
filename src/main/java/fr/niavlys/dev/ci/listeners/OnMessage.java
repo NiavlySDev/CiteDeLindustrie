@@ -1,4 +1,4 @@
-package fr.niavlys.dev.ci.message;
+package fr.niavlys.dev.ci.listeners;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.players.CIPlayer;
