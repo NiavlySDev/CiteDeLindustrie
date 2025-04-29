@@ -9,12 +9,14 @@ public class QuestLink {
     private final CIPlayer player;
     private final Quest quest;
     private final QuestTier tier;
+    private boolean started;
 
     public QuestLink(Player p, CIPlayer player, Quest quest, QuestTier tier){
         this.p = p;
         this.player = player;
         this.quest = quest;
         this.tier = tier;
+        this.started = false;
     }
 
     public Player getPlayer(){
@@ -28,5 +30,15 @@ public class QuestLink {
     }
     public QuestTier getTier(){
         return tier;
+    }
+
+    public void start(){
+        this.started = true;
+    }
+    public boolean isStarted(){
+        return started;
+    }
+    public void stop(){
+        this.started = false;
     }
 }

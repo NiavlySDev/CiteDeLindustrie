@@ -4,7 +4,7 @@ import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.cv.main.CommonVerif;
+import fr.niavlys.dev.ci.main.CommonVerif;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class GradeC implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender s, Command cmd, String msg, String[] args) {
         // /grade <player> <set/rankup/derank> <grade>
         if(!(s instanceof Player)){
-            return Console((ConsoleCommandSender) s, args);
+            return Console(args);
         }
         else{
             return Joueur((Player) s, args);

@@ -7,7 +7,7 @@ import fr.niavlys.dev.ci.players.grades.GradeType;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.cv.main.CommonVerif;
+import fr.niavlys.dev.ci.main.CommonVerif;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class EconomyC implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender s, Command cmd, String msg, String[] args) {
         // /economy <player> <bronze/argent/or> <add/remove/set> <amount> <sign>
         if(CommonVerif.isConsole(s)){
-            return Console((ConsoleCommandSender) s, args);
+            return Console(args);
         }
         else{
             return Joueur((Player) s, args);

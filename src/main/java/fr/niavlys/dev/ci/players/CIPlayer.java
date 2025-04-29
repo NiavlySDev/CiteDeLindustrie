@@ -23,12 +23,14 @@ public class CIPlayer {
     private Grade grade;
     private Balance balance;
     private ScoreboardManager scoreboard;
+    private Integer questStarted;
 
     public CIPlayer(Player p){
         this.name = p.getName();
         this.uuid = p.getUniqueId();
         this.grade = new Grade(GradeType.OUVRIER);
         this.balance = new Balance();
+        this.questStarted = 0;
         scoreboard = new ScoreboardManager(p, GradientManager.createGradientTitle("Cité de L'industrie", Color.RED, Color.BLUE));
         reloadScoreboard();
     }
@@ -52,6 +54,18 @@ public class CIPlayer {
     }
     public Grade getGrade() {
         return grade;
+    }
+    public Integer getQuestStarted(){
+        return this.questStarted;
+    }
+    public void addQuestStarted(Integer questStarted){
+        this.questStarted += questStarted;
+    }
+    public void removeQuestStarted(Integer questStarted){
+        this.questStarted -= questStarted;
+    }
+    public void setQuestStarted(Integer questStarted){
+        this.questStarted = questStarted;
     }
     public void setName(String name) {
         this.name = name;

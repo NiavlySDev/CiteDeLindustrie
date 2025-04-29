@@ -6,7 +6,7 @@ import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.message.commonMessages.ErrorMessage;
 import fr.niavlys.dev.ci.message.commonMessages.ValidationMessage;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.cv.main.CommonVerif;
+import fr.niavlys.dev.ci.main.CommonVerif;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

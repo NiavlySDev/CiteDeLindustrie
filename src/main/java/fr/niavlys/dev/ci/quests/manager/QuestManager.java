@@ -1,7 +1,8 @@
-package fr.niavlys.dev.ci.quests;
+package fr.niavlys.dev.ci.quests.manager;
 
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.quests.types.BreakQuest;
+import fr.niavlys.dev.ci.quests.QuestList;
+import fr.niavlys.dev.ci.quests.QuestType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 

@@ -1,4 +1,4 @@
-package fr.niavlys.dev.cv.main;
+package fr.niavlys.dev.ci.main;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;

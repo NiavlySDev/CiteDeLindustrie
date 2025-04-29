@@ -2,7 +2,7 @@ package fr.niavlys.dev.ci.listeners;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.ci.quests.QuestManager;
+import fr.niavlys.dev.ci.quests.manager.QuestManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

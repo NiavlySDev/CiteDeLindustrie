@@ -2,7 +2,7 @@ package fr.niavlys.dev.ci.economy.convertisseur;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.players.CIPlayer;
-import fr.niavlys.dev.cv.main.CommonVerif;
+import fr.niavlys.dev.ci.main.CommonVerif;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public class ConvertMoneyC implements CommandExecutor {
         }
         Player p = (Player) s;
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
-        Inventory inv = ConvertisseurGUI.buildConvertisseur(player);
+        Inventory inv = ConvertisseurGUI.buildConvertisseur();
         p.openInventory(inv);
         return false;
     }

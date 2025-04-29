@@ -1,11 +1,11 @@
-package fr.niavlys.dev.ci.quests.types;
+package fr.niavlys.dev.ci.quests.manager;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.players.CIPlayer;
 import fr.niavlys.dev.ci.quests.QuestLink;
 import fr.niavlys.dev.ci.quests.QuestList;
 import fr.niavlys.dev.ci.quests.QuestType;
-import fr.niavlys.dev.cv.main.Utils;
+import fr.niavlys.dev.ci.main.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -26,6 +26,9 @@ public class BreakQuest {
         Material mat = e.getBlock().getType();
         for(QuestLink link : breakQuest){
             if(link.getQuest().getMat().equals(mat)){
+                if(!link.isStarted()){
+                    continue;
+                }
                 link.getTier().addAmount(1);
                 String questName = link.getQuest().getQuest().getName();
                 String questLevel = link.getTier().getLevel().toString();

@@ -2,7 +2,7 @@ package fr.niavlys.dev.ci.quests.commands;
 
 import fr.niavlys.dev.ci.players.CIPlayer;
 import fr.niavlys.dev.ci.quests.inventory.QuestGUI;
-import fr.niavlys.dev.cv.main.CommonVerif;
+import fr.niavlys.dev.ci.main.CommonVerif;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

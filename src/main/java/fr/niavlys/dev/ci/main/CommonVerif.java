@@ -1,4 +1,4 @@
-package fr.niavlys.dev.cv.main;
+package fr.niavlys.dev.ci.main;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.message.MessageType;
