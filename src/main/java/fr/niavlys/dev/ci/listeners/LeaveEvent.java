@@ -1,6 +1,7 @@
-package fr.niavlys.dev.ci.players;
+package fr.niavlys.dev.ci.listeners;
 
 import fr.niavlys.dev.ci.donnees.BDD;
+import fr.niavlys.dev.ci.players.CIPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

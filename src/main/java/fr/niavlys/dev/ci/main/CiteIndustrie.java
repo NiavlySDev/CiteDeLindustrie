@@ -3,10 +3,9 @@ package fr.niavlys.dev.ci.main;
 import fr.niavlys.dev.ci.economy.convertisseur.ConvertMoneyC;
 import fr.niavlys.dev.ci.economy.EconomyC;
 import fr.niavlys.dev.ci.economy.MoneyC;
-import fr.niavlys.dev.ci.message.OnMessage;
+import fr.niavlys.dev.ci.listeners.*;
 import fr.niavlys.dev.ci.players.*;
 import fr.niavlys.dev.ci.players.grades.GradeC;
-import fr.niavlys.dev.ci.inventory.GUIListener;
 import fr.niavlys.dev.cm.main.ConfigDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -47,6 +46,7 @@ public final class CiteIndustrie extends JavaPlugin {
         createEvent(new JoinEvent());
         createEvent(new LeaveEvent());
         createEvent(new OnMessage());
+        createEvent(new Break());
 
         System.out.println("[" + name + " v" + version + "] Active.");
         System.out.println("[" + name + " v" + version + "] Developpe par " + author + ".");

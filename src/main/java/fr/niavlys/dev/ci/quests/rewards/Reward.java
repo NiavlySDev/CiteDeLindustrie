@@ -1,0 +1,124 @@
+package fr.niavlys.dev.ci.quests.rewards;
+
+import fr.niavlys.dev.bn.main.BigNumbers;
+import fr.niavlys.dev.ci.donnees.BDD;
+import fr.niavlys.dev.ci.message.MessageType;
+import fr.niavlys.dev.ci.message.Messages;
+import fr.niavlys.dev.ci.players.CIPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+public class Reward {
+
+    private RewardType type;
+    private ItemStack item;
+    private String command;
+    private String message;
+    private BigNumbers money;
+
+    public Reward() {
+        this(null, null, null, null, null, null);
+    }
+    private Reward(RewardType type, ItemStack item, String command, String message, BigNumbers money, Integer amount) {
+        this.type = type;
+        this.item = item;
+        this.command = command;
+        this.message = message;
+        this.money = money;
+    }
+
+    private void setType(RewardType type) {
+        this.type = type;
+    }
+    private void setItem(ItemStack item) {
+        this.item = item;
+    }
+    private void setCommand(String command) {
+        this.command = command;
+    }
+    private void setMessage(String message) {
+        this.message = message;
+    }
+    private void setMoney(BigNumbers money) {
+        this.money = money;
+    }
+
+    public void initRewardItem(ItemStack item, String message){
+        this.setType(RewardType.Item);
+        this.setItem(item);
+        this.setMessage(message);
+    }
+    public void initRewardCommand(String command, String message){
+        this.setType(RewardType.Command);
+        this.setCommand(command);
+        this.setMessage(message);
+    }
+    public void initRewardOr(BigNumbers money, String message){
+        this.setType(RewardType.Or);
+        this.setMoney(money);
+        this.setMessage(message);
+    }
+    public void initRewardArgent(BigNumbers money, String message){
+        this.setType(RewardType.Argent);
+        this.setMoney(money);
+        this.setMessage(message);
+    }
+    public void initRewardBronze(BigNumbers money, String message){
+        this.setType(RewardType.Bronze);
+        this.setMoney(money);
+        this.setMessage(message);
+    }
+
+    public void RewardItem(Player p){
+        p.getInventory().addItem(item);
+        Messages.send(message, MessageType.Quest, p);
+    }
+    public void RewardCommand(Player p){
+        p.getServer().dispatchCommand(p.getServer().getConsoleSender(), command);
+        Messages.send(message, MessageType.Quest, p);
+    }
+    public void RewardOr(Player p){
+        CIPlayer player = BDD.getPlayer(p.getUniqueId());
+        player.getBalance().getOr().add(money);
+        Messages.send(message, MessageType.Quest, p);
+    }
+    public void RewardArgent(Player p){
+        CIPlayer player = BDD.getPlayer(p.getUniqueId());
+        player.getBalance().getArgent().add(money);
+        Messages.send(message, MessageType.Quest, p);
+    }
+    public void RewardBronze(Player p){
+        CIPlayer player = BDD.getPlayer(p.getUniqueId());
+        player.getBalance().getBronze().add(money);
+        Messages.send(message, MessageType.Quest, p);
+    }
+    public void RewardPlayer(Player p){
+        if(this.getType().equals(RewardType.Bronze)){
+            RewardBronze(p);
+        } else if (this.getType().equals(RewardType.Argent)) {
+            RewardArgent(p);
+        } else if (this.getType().equals(RewardType.Or)) {
+            RewardOr(p);
+        } else if (this.getType().equals(RewardType.Command)) {
+            RewardCommand(p);
+        } else if (this.getType().equals(RewardType.Item)) {
+            RewardItem(p);
+        }
+    }
+
+    public RewardType getType() {
+        return type;
+    }
+    public ItemStack getItem() {
+        return item;
+    }
+    public String getCommand() {
+        return command;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public BigNumbers getMoney() {
+        return money;
+    }
+}

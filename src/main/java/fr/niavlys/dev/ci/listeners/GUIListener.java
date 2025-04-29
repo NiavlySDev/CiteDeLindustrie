@@ -1,4 +1,4 @@
-package fr.niavlys.dev.ci.inventory;
+package fr.niavlys.dev.ci.listeners;
 
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.economy.convertisseur.ConvertisseurGUI;
@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-
-import java.awt.*;
 
 public class GUIListener implements Listener {
 
@@ -30,6 +28,5 @@ public class GUIListener implements Listener {
         if(invTitle.equals(ConvertisseurGUI.getTitle())){
             ConvertisseurGUI.Action(e, p, player);
         }
-
     }
 }

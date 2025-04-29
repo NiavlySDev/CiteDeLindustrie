@@ -6,7 +6,9 @@ public enum MessageType {
     Info("Information", ChatColor.AQUA),
     Error("Erreur", ChatColor.RED),
     Warning("Warning", ChatColor.GOLD),
-    Success("Succès", ChatColor.GREEN);
+    Success("Succès", ChatColor.GREEN),
+    Quest("Quest", ChatColor.DARK_PURPLE),
+    ;
 
     private final String name;
     private final ChatColor color;
