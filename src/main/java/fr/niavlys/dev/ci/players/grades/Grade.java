@@ -30,10 +30,4 @@ public class Grade {
     public boolean hasPerm(GradeType type){
         return this.grade.ordinal() >= type.ordinal();
     }
-    public GradeType getNext(){
-        return this.grade.getNext(this.grade);
-    }
-    public GradeType getPrevious(){
-        return this.grade.getPrevious(this.grade);
-    }
 }

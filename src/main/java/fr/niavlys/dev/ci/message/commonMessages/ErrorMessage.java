@@ -9,6 +9,7 @@ public enum ErrorMessage {
     Negatif("Vous ne pouvez pas entrer de nombre négatifs!"),
     NoPerm("Vous n'avez pas la permission d'executer cette commande!"),
     NotInteger("Vous devez entrer un nombre!"),
+    NoConsole("Vous ne pouvez pas utiliser cette commande en console!"),
     ;
 
     private final String message;

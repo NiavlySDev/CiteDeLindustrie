@@ -17,7 +17,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class CiteIndustrie extends JavaPlugin {
 
     public static ConfigDataManager players;
-    public static ConfigDataManager shopPrices;
     public static String name;
     public static String version;
     public static String author;
@@ -31,14 +30,10 @@ public final class CiteIndustrie extends JavaPlugin {
         players = new ConfigDataManager(name, "players.yml");
         System.out.println("[" + name + " v" + version + "] Configuration des joueurs initialisee.");
 
-        shopPrices = new ConfigDataManager(name, "shopPrices.yml");
-        System.out.println("[" + name + " v" + version + "] Configuration des prix des items de la boutique initialisee.");
-
         loadPlayers();
 
         createCommand("grade", new GradeC(), true);
         createCommand("economy", new EconomyC(), true);
-        createCommand("settings", new SettingsC(), true);
         createCommand("money", new MoneyC(), true);
         createCommand("convertmoney", new ConvertMoneyC(), false);
 

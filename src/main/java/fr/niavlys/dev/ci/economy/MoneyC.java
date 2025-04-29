@@ -3,7 +3,10 @@ package fr.niavlys.dev.ci.economy;
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
+import fr.niavlys.dev.ci.message.commonMessages.ErrorMessage;
+import fr.niavlys.dev.ci.message.commonMessages.ValidationMessage;
 import fr.niavlys.dev.ci.players.CIPlayer;
+import fr.niavlys.dev.cv.main.CommonVerif;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,8 +22,8 @@ public class MoneyC implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender s, Command cmd, String msg, String[] args) {
         // /money <type> <player>
-        if(!(s instanceof Player)){
-            System.out.println("Vous ne pouvez pas executer cette commande avec la console!");
+        if(CommonVerif.isConsole(s)){
+            Messages.send(ErrorMessage.NoConsole.getMessage(), MessageType.Error, null);
             return false;
         }
         Player p = (Player) s;
@@ -29,111 +32,47 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             System.err.println("MoneyC: CIPlayer null (MoneyC:23)");
             return false;
         }
+
         List<String> types = Arrays.asList("bronze", "argent", "or");
         String type = args[0];
-        if(!types.contains(type)){
-            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
+        if(!CommonVerif.verifArg(p, type, types)){
             return false;
         }
 
+        String targetName = null;
+
         if(args.length == 1){
-            if(type.equalsIgnoreCase("bronze")){
-                Messages.send(
-                        Messages.build(
-                                "Vous avez %amount% %moneyType%",
-                                MessageType.Info,
-                                player
-                        )
-                                .replaceAll("%amount%", player.getBalance().getBronze().toString())
-                                .replaceAll("%moneyType%", "bronze")
-                        ,p
-                );
-                return true;
-            }
-            else if(type.equalsIgnoreCase("argent")){
-                Messages.send(
-                        Messages.build(
-                                        "Vous avez %amount% %moneyType%",
-                                        MessageType.Info,
-                                        player
-                                )
-                                .replaceAll("%amount%", player.getBalance().getArgent().toString())
-                                .replaceAll("%moneyType%", "argent")
-                        ,p
-                );
-                return true;
-            }
-            else if(type.equalsIgnoreCase("or")){
-                Messages.send(
-                        Messages.build(
-                                        "Vous avez %amount% %moneyType%",
-                                        MessageType.Info,
-                                        player
-                                )
-                                .replaceAll("%amount%", player.getBalance().getOr().toString())
-                                .replaceAll("%moneyType%", "or")
-                        ,p
-                );
-                return true;
-            }
+            targetName = player.getName();
         }
         else if(args.length == 2){
-            String targetName = args[1];
-            if(Bukkit.getPlayer(targetName) == null){
-                Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
+            targetName = args[1];
+            if(!CommonVerif.verifOnline(targetName, p)){
                 return false;
             }
             Player t = Bukkit.getPlayer(targetName);
-            CIPlayer target = BDD.getPlayer(t.getUniqueId());
-            if(target == null){
-                Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
-                return false;
-            }
-            if(type.equalsIgnoreCase("bronze")){
-                Messages.send(
-                        Messages.build(
-                                        "Le joueur a %amount% %moneyType%",
-                                        MessageType.Info,
-                                        player
-                                )
-                                .replaceAll("%amount%", target.getBalance().getBronze().toString())
-                                .replaceAll("%moneyType%", "bronze")
-                        ,p
-                );
-                return true;
-            }
-            else if(type.equalsIgnoreCase("argent")){
-                Messages.send(
-                        Messages.build(
-                                        "Le joueur a %amount% %moneyType%",
-                                        MessageType.Info,
-                                        player
-                                )
-                                .replaceAll("%amount%", target.getBalance().getArgent().toString())
-                                .replaceAll("%moneyType%", "argent")
-                        ,p
-                );
-                return true;
-            }
-            else if(type.equalsIgnoreCase("or")){
-                Messages.send(
-                        Messages.build(
-                                        "Le joueur a %amount% %moneyType%",
-                                        MessageType.Info,
-                                        player
-                                )
-                                .replaceAll("%amount%", target.getBalance().getOr().toString())
-                                .replaceAll("%moneyType%", "or")
-                        ,p
-                );
-                return true;
-            }
         }
         else{
-            Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
+            Messages.send(ErrorMessage.TooManyArg.getMessage(), MessageType.Error, p);
             return false;
         }
-        return false;
+        String amount = null;
+        if(type.equalsIgnoreCase("bronze")){
+            amount = player.getBalance().getBronze().toString();
+        }
+        else if(type.equalsIgnoreCase("argent")){
+            amount = player.getBalance().getArgent().toString();
+        }
+        else if(type.equalsIgnoreCase("or")){
+            amount = player.getBalance().getOr().toString();
+        }
+        Messages.send(
+                Messages.build(ValidationMessage.GetMoney.getMessage(), MessageType.Info, player)
+                        .replaceAll("%amount%", amount.toString())
+                        .replaceAll("%type%", type)
+                        .replaceAll("%joueur%", targetName)
+                ,p
+        );
+        return true;
     }
 
     @Override

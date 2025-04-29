@@ -4,6 +4,7 @@ import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.message.MessageType;
 import fr.niavlys.dev.ci.message.Messages;
 import fr.niavlys.dev.ci.players.CIPlayer;
+import fr.niavlys.dev.cv.main.CommonVerif;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -29,26 +30,17 @@ public class GradeC implements CommandExecutor, TabCompleter {
             System.err.println("GradeC: CIPlayer null (GradeC:33)");
             return false;
         }
-        if(!player.getGrade().hasPerm(GradeType.ORGANISATEUR)){
-            Messages.send("Vous n'avez pas la permission pour faire cet action", MessageType.Error, p);
-            return false;
-        }
+        if(!CommonVerif.hasPerm(player, GradeType.ORGANISATEUR)) return false;
 
         String targetName = args[0];
-        if(Bukkit.getPlayer(targetName) == null){
-            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
-            return false;
-        }
-
+        if(!CommonVerif.verifOnline(targetName, p)) return false;
         Player t = Bukkit.getPlayer(targetName);
-
         CIPlayer target = BDD.getPlayer(t.getUniqueId());
-        if(target == null){
-            Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, p);
-            return false;
-        }
 
         String action = args[1];
+        List<String> actions = List.of("set", "rankup", "derank");
+        if(!CommonVerif.verifArg(p, action, actions)) return false;
+
         if(action.equalsIgnoreCase("set")){
             String gradeName = args[2];
             if(GradeType.getByName(gradeName) == null){
@@ -67,14 +59,13 @@ public class GradeC implements CommandExecutor, TabCompleter {
             return true;
         }
         else{
-            if(args.length > 2){
-                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
-                return false;
-            }
+            CommonVerif.verifNombreArg(args, 2, p);
             if(action.equalsIgnoreCase("rankup")){
-                String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
-                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
+                String gradeName = target.getGrade().getGrade().getDisplayName();
+                String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target)
+                        .replaceAll("%grade%", gradeName
+                        );
                 Messages.send(msg, t);
                 target.reloadScoreboard();
                 t.setPlayerListName(target.getGrade().getGrade().getColor() + "["+target.getGrade().getGrade().getDisplayName()+"] " + target.getName());
@@ -83,8 +74,8 @@ public class GradeC implements CommandExecutor, TabCompleter {
                 return true;
             }
             else if(action.equalsIgnoreCase("derank")){
-                String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
+                String gradeName = target.getGrade().getGrade().getDisplayName();
                 String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
@@ -93,14 +84,11 @@ public class GradeC implements CommandExecutor, TabCompleter {
                 Messages.send(msg, p);
                 return true;
             }
-            else {
-                Messages.send("Vous avez entré le mauvais argument!", MessageType.Error, p);
-                return false;
-            }
         }
+        return false;
     }
 
-    private boolean Console(ConsoleCommandSender s, String[] args) {
+    private boolean Console(String[] args) {
         String targetName = args[0];
         if(Bukkit.getPlayer(targetName) == null){
             Messages.send("Le joueur n'est pas connecté ou n'existe pas!", MessageType.Error, null);
@@ -140,8 +128,8 @@ public class GradeC implements CommandExecutor, TabCompleter {
                 return false;
             }
             if(action.equalsIgnoreCase("rankup")){
-                String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().rankup();
+                String gradeName = target.getGrade().getGrade().getDisplayName();
                 String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();
@@ -150,8 +138,8 @@ public class GradeC implements CommandExecutor, TabCompleter {
                 return true;
             }
             else if(action.equalsIgnoreCase("derank")){
-                String gradeName = target.getGrade().getGrade().getDisplayName();
                 target.getGrade().derank();
+                String gradeName = target.getGrade().getGrade().getDisplayName();
                 String msg = Messages.build("Votre grade a été changé en %grade%", MessageType.Info, target).replaceAll("%grade%", gradeName);
                 Messages.send(msg, t);
                 target.reloadScoreboard();

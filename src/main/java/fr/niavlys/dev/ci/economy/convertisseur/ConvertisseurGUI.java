@@ -45,7 +45,7 @@ public class ConvertisseurGUI {
         ConvertisseurGUI.or = or;
     }
 
-    public static Inventory buildConvertisseur(CIPlayer player){
+    public static Inventory buildConvertisseur(){
         String title;
         String str1;
         String str2;

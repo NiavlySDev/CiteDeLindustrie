@@ -91,18 +91,7 @@ public enum GradeType {
                 return null;
         }
     }
-    public boolean hasPerm(GradeType type){
-        return this.ordinal() >= type.ordinal();
-    }
 
-    public static boolean exists(GradeType type){
-        for(GradeType grade : GradeType.values()){
-            if(grade == type){
-                return true;
-            }
-        }
-        return false;
-    }
     public static GradeType getByName(String name){
         for(GradeType grade : GradeType.values()){
             if(grade.getDisplayName().equalsIgnoreCase(name)){
@@ -118,12 +107,5 @@ public enum GradeType {
             }
         }
         return null;
-    }
-    public static List<String> getNames(){
-        List<String> names = List.of();
-        for(GradeType grade : GradeType.values()){
-            names.add(grade.getDisplayName());
-        }
-        return names;
     }
 }
