@@ -77,28 +77,34 @@ public class Reward {
         p.getServer().dispatchCommand(p.getServer().getConsoleSender(), command);
         Messages.send(message, MessageType.Quest, p);
     }
-    public void RewardOr(Player p){
+    public void RewardOr(Player p, Integer level){
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
-        player.getBalance().getOr().add(money);
-        Messages.send(message, MessageType.Quest, p);
+        BigNumbers moneyLevel = new BigNumbers(money.getNumber()*(level-1));
+        player.getBalance().getOr().add(moneyLevel);
+        Messages.send(message+" x "+(level-1), MessageType.Quest, p);
+        player.reloadScoreboard();
     }
-    public void RewardArgent(Player p){
+    public void RewardArgent(Player p, Integer level){
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
-        player.getBalance().getArgent().add(money);
-        Messages.send(message, MessageType.Quest, p);
+        BigNumbers moneyLevel = new BigNumbers(money.getNumber()*(level-1));
+        player.getBalance().getArgent().add(moneyLevel);
+        Messages.send(message+" x "+(level-1), MessageType.Quest, p);
+        player.reloadScoreboard();
     }
-    public void RewardBronze(Player p){
+    public void RewardBronze(Player p, Integer level){
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
-        player.getBalance().getBronze().add(money);
-        Messages.send(message, MessageType.Quest, p);
+        BigNumbers moneyLevel = new BigNumbers(money.getNumber()*(level-1));
+        player.getBalance().getBronze().add(moneyLevel);
+        Messages.send(message+" x "+(level-1), MessageType.Quest, p);
+        player.reloadScoreboard();
     }
-    public void RewardPlayer(Player p){
+    public void RewardPlayer(Player p, Integer level){
         if(this.getType().equals(RewardType.Bronze)){
-            RewardBronze(p);
+            RewardBronze(p, level);
         } else if (this.getType().equals(RewardType.Argent)) {
-            RewardArgent(p);
+            RewardArgent(p, level);
         } else if (this.getType().equals(RewardType.Or)) {
-            RewardOr(p);
+            RewardOr(p, level);
         } else if (this.getType().equals(RewardType.Command)) {
             RewardCommand(p);
         } else if (this.getType().equals(RewardType.Item)) {

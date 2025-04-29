@@ -139,11 +139,11 @@ public class EconomyC implements CommandExecutor, TabCompleter {
             messageAdmin = ValidationMessage.MisXAdmin.getMessage();
         }
 
-        message.replaceAll("%nombre%", amount.toString());
-        message.replaceAll("%type%", type);
-        messageAdmin.replaceAll("%nombre%", amount.toString());
-        messageAdmin.replaceAll("%type%", type);
-        messageAdmin.replaceAll("%joueur%", target.getName());
+        message = message.replaceAll("%nombre%", amount.toString());
+        message = message.replaceAll("%type%", type);
+        messageAdmin = messageAdmin.replaceAll("%nombre%", amount.toString());
+        messageAdmin = messageAdmin.replaceAll("%type%", type);
+        messageAdmin = messageAdmin.replaceAll("%joueur%", target.getName());
 
         Messages.send(message, MessageType.Success, t);
 

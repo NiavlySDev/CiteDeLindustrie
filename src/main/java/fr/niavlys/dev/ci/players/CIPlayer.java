@@ -6,6 +6,9 @@ import fr.niavlys.dev.ci.economy.Balance;
 import fr.niavlys.dev.ci.main.CiteIndustrie;
 import fr.niavlys.dev.ci.players.grades.Grade;
 import fr.niavlys.dev.ci.players.grades.GradeType;
+import fr.niavlys.dev.ci.quests.QuestLink;
+import fr.niavlys.dev.ci.quests.QuestList;
+import fr.niavlys.dev.ci.quests.QuestTier;
 import fr.niavlys.dev.cm.main.ConfigDataManager;
 import fr.niavlys.dev.gm.main.GradientManager;
 import fr.niavlys.dev.sm.main.ScoreboardManager;
@@ -83,6 +86,25 @@ public class CIPlayer {
         this.getBalance().getBronze().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.bronze.entier"), (String) players.get(this.uuid.toString(), "balance.bronze.sign")));
         this.getBalance().getArgent().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.argent.entier"), (String) players.get(this.uuid.toString(), "balance.argent.sign")));
         this.getBalance().getOr().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.or.entier"), (String) players.get(this.uuid.toString(), "balance.or.sign")));
+        BDD.addQuest(new QuestLink(Bukkit.getPlayer(this.getUuid()), QuestList.BreakStone, new QuestTier(10, 1024)));
+        BDD.addQuest(new QuestLink(Bukkit.getPlayer(this.getUuid()), QuestList.BreakIron, new QuestTier(4, 512)));
+
+        for(QuestLink link : BDD.getQuestsByPlayer(Bukkit.getPlayer(this.getUuid()))){
+            String questName = link.getQuest().getName();
+            if(!players.exists(""+this.getUuid().toString()+".quest."+questName+".tier.amount")){
+                continue;
+            }
+
+            link.getTier().setAmount((Integer) players.get(this.getUuid().toString(), "quest."+questName+".tier.amount"));
+            link.getTier().setLevel((Integer) players.get(this.getUuid().toString(), "quest."+questName+".tier.level"));
+            if(players.get(this.getUuid().toString(), "quest."+questName+".active").equals(1)){
+                link.start();
+            }
+            else {
+                link.stop();
+            }
+        }
+
         BDD.addPlayer(this.getUuid(), this);
         reloadScoreboard();
         Bukkit.getPlayer(this.getUuid()).setPlayerListName(this.getGrade().getGrade().getColor() + "["+this.getGrade().getGrade().getDisplayName()+"] " + this.getName());
@@ -99,5 +121,11 @@ public class CIPlayer {
         players.set(this.getUuid().toString(), "balance.or.sign", this.getBalance().getOr().getSign());
         players.set(this.getUuid().toString(), "grade", this.getGrade().getGrade().getInitials());
         players.set(this.getUuid().toString(), "nick", this.getName());
+        for(QuestLink link : BDD.getQuestsByPlayer(Bukkit.getPlayer(this.getUuid()))){
+            String questName = link.getQuest().getName();
+            players.set(this.getUuid().toString(), "quest."+questName+".tier.level", link.getTier().getLevel());
+            players.set(this.getUuid().toString(), "quest."+questName+".tier.amount", link.getTier().getAmount());
+            players.set(this.getUuid().toString(), "quest."+questName+".active", link.isStarted() ? 1 : 0);
+        }
     }
 }

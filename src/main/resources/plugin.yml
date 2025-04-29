@@ -12,3 +12,5 @@ commands:
     description: Money Command
   convertmoney:
     description: Convert Money Command
+  quests:
+    description: Quests Command

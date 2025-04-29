@@ -9,9 +9,9 @@ public class QuestTier {
     private Integer percentage;
 
     public QuestTier(Integer levelMax, Integer amountPerLevel){
-        this.level = 0;
+        this.level = 1;
         this.levelMax = levelMax;
-        this.amount = amountPerLevel;
+        this.amount = 0;
         this.amountPerLevel = amountPerLevel;
         this.percentage = 0;
     }
@@ -31,7 +31,7 @@ public class QuestTier {
     }
 
     public void calculatePercentage(){
-        percentage = (int) (amount/(float)amountPerLevel*100);
+        percentage = (int) (amount/(float)(amountPerLevel*level)*100);
     }
 
     public Integer getPercentage() {
@@ -52,11 +52,19 @@ public class QuestTier {
 
     public void addAmount(Integer amount){
         this.amount += amount;
+        calculatePercentage();
     }
     public void removeAmount(Integer amount){
         this.amount -= amount;
+        calculatePercentage();
     }
     public void setAmount(Integer amount) {
         this.amount = amount;
+        calculatePercentage();
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+        calculatePercentage();
     }
 }

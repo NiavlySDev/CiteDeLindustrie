@@ -1,18 +1,16 @@
 name: CiteIndustrie
-version: '0.2.8'
+version: '0.7.8'
 main: fr.niavlys.dev.ci.main.CiteIndustrie
 api-version: '1.21'
 authors: [ NiavlySDev ]
 commands:
-  shop:
-    description: Shop Command
   grade:
     description: Grade Command
-  settings:
-    description: Settings Command
   economy:
     description: Economy Command
   money:
     description: Money Command
-  reloadShopPrice:
-    description: ReloadShopPrices Command
+  convertmoney:
+    description: Convert Money Command
+  quests:
+    description: Quests Command

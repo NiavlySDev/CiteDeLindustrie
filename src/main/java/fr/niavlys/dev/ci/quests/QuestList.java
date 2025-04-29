@@ -3,6 +3,7 @@ package fr.niavlys.dev.ci.quests;
 import fr.niavlys.dev.bn.main.BigNumbers;
 import fr.niavlys.dev.ci.quests.rewards.Reward;
 import fr.niavlys.dev.ci.quests.rewards.RewardType;
+import org.bukkit.Material;
 
 import java.util.List;
 
@@ -11,23 +12,39 @@ public enum QuestList {
     BreakStone(
         QuestType.Mining,
         "Miner de la Pierre",
+        Material.STONE,
         List.of(
-            new Reward(RewardType.Bronze, null, null, null, new BigNumbers(10, "K")),
-            new Reward(RewardType.Argent, null, null, null, new BigNumbers(1))
+            new Reward(RewardType.Bronze, null, null, "+ 10 K Bronze", new BigNumbers(10, "K")),
+            new Reward(RewardType.Argent, null, null, "+ 1 Argent", new BigNumbers(1))
         )
-    );
+    ),
+    BreakIron(
+        QuestType.Mining,
+        "Miner du fer",
+        Material.IRON_ORE,
+        List.of(
+            new Reward(RewardType.Bronze, null, null, "+ 35 K Bronze", new BigNumbers(35, "K")),
+            new Reward(RewardType.Argent, null, null, "+ 5 Argent", new BigNumbers(5))
+        )
+    )
+    ;
 
+    private final Material mat;
     private final QuestType type;
     private final String name;
     private final List<Reward> rewards;
 
-    QuestList(QuestType type, String name, List<Reward> rewards){
+    QuestList(QuestType type, String name, Material mat, List<Reward> rewards){
         this.type = type;
         this.name = name;
         this.rewards = rewards;
+        this.mat = mat;
     }
     public QuestType getType() {
         return type;
+    }
+    public Material getMat() {
+        return mat;
     }
     public String getName() {
         return name;

@@ -66,10 +66,12 @@ public class MoneyC implements CommandExecutor, TabCompleter {
             amount = player.getBalance().getOr().toString();
         }
         Messages.send(
-                Messages.build(ValidationMessage.GetMoney.getMessage(), MessageType.Info, player)
-                        .replaceAll("%amount%", amount.toString())
-                        .replaceAll("%type%", type)
-                        .replaceAll("%joueur%", targetName)
+                Messages.build(
+                        ValidationMessage.GetMoney.getMessage()
+                                .replaceAll("%amount%", amount.toString())
+                                .replaceAll("%type%", type)
+                                .replaceAll("%joueur%", targetName)
+                        , MessageType.Info, player)
                 ,p
         );
         return true;

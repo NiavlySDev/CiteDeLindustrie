@@ -20,6 +20,10 @@ public class Messages {
     }
 
     public static void send(String msg, MessageType type, Player p){
+        if(p == null){
+            send(buildConsole(msg, type), null);
+            return;
+        }
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
         String msg2 = Messages.build(msg, type, player);
         Messages.send(msg2, p);

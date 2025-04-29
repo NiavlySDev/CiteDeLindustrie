@@ -6,6 +6,7 @@ import fr.niavlys.dev.ci.economy.MoneyC;
 import fr.niavlys.dev.ci.listeners.*;
 import fr.niavlys.dev.ci.players.*;
 import fr.niavlys.dev.ci.players.grades.GradeC;
+import fr.niavlys.dev.ci.quests.commands.QuestC;
 import fr.niavlys.dev.ci.quests.inventory.QuestGUI;
 import fr.niavlys.dev.cm.main.ConfigDataManager;
 import org.bukkit.Bukkit;
@@ -40,6 +41,7 @@ public final class CiteIndustrie extends JavaPlugin {
         createCommand("economy", new EconomyC(), true);
         createCommand("money", new MoneyC(), true);
         createCommand("convertmoney", new ConvertMoneyC(), false);
+        createCommand("quests", new QuestC(), false);
 
         createEvent(new GUIListener());
         createEvent(new JoinEvent());

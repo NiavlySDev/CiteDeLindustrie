@@ -29,4 +29,21 @@ public class BDD {
         }
         return playerQuests;
     }
+    public static void addQuest(QuestLink link){
+        quests.add(link);
+    }
+    public static void removeQuest(QuestLink link){
+        quests.remove(link);
+    }
+    public static void removeQuestByPlayer(Player p){
+        List<QuestLink> playerQuests = new ArrayList<>();
+        for(QuestLink link : quests){
+            if(link.getPlayer().equals(p)){
+                playerQuests.add(link);
+            }
+        }
+        for(QuestLink link : playerQuests){
+            removeQuest(link);
+        }
+    }
 }

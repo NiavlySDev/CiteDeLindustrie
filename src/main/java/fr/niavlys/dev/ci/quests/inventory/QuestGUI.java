@@ -38,12 +38,13 @@ public class QuestGUI {
     }
 
     public static Inventory build(Player p){
+        inv.clear();
         List<QuestLink> quests = BDD.getQuestsByPlayer(p);
         for(QuestLink link : quests){
             ItemStack questItem = new ItemStack(link.getQuest().getMat());
             ItemMeta questItemMeta = questItem.getItemMeta();
 
-            String questName = link.getQuest().getQuest().getName();
+            String questName = link.getQuest().getName();
             String started = link.isStarted() ? ChatColor.GREEN+"Oui" : ChatColor.RED+"Non";
             String questLevel = link.getTier().getLevel().toString();
             String questLevelMax = link.getTier().getLevelMax().toString();
@@ -60,7 +61,7 @@ public class QuestGUI {
                     ChatColor.GOLD+"Clic Gauche: "+ChatColor.GREEN+"Lancer"+ChatColor.AQUA+" la Quête",
                     ChatColor.GOLD+"Clic Droit: "+ChatColor.RED+"Arrêter "+ChatColor.AQUA+"la Quête",
                     ChatColor.RED+"Attention! "+ChatColor.GOLD+"Si vous arrêtez une quête,",
-                    ChatColor.GOLD+"vous perdrez votre progression actuelle",
+                    ChatColor.GOLD+"vous perdrez votre progression actuelle,",
                     ChatColor.GOLD+"pas votre level, mais votre avancement"
             ));
             questItemMeta.setEnchantmentGlintOverride(true);
@@ -103,6 +104,7 @@ public class QuestGUI {
                 return;
             }
             quest.stop();
+            quest.getTier().setAmount(0);
             Messages.send("Vous avez arrêté la quête!", MessageType.Success, p);
             player.removeQuestStarted(1);
         }

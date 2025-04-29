@@ -20,9 +20,9 @@ public class CommonVerif {
     public static boolean isConsole(CommandSender s){
         if(!isPlayer(s)){
             Messages.send(ErrorMessage.NoConsole.getMessage(), MessageType.Error, null);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean verifNombreArg(String[] args, Integer nombre, Player p){
@@ -53,9 +53,10 @@ public class CommonVerif {
 
     public static boolean verifArg(Player p, String arg, List<String> possibilities){
         String usage = "<"+possibilities.get(0);
-        possibilities.remove(0);
+        Integer i = 0;
         for(String str : possibilities){
-            usage += "|" + str;
+            if(i != 0) usage += "|" + str;
+            i++;
         }
         usage += ">";
 

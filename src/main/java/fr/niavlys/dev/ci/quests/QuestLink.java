@@ -6,15 +6,13 @@ import org.bukkit.entity.Player;
 public class QuestLink {
 
     private final Player p;
-    private final CIPlayer player;
-    private final Quest quest;
+    private final QuestList list;
     private final QuestTier tier;
     private boolean started;
 
-    public QuestLink(Player p, CIPlayer player, Quest quest, QuestTier tier){
+    public QuestLink(Player p, QuestList list, QuestTier tier){
         this.p = p;
-        this.player = player;
-        this.quest = quest;
+        this.list = list;
         this.tier = tier;
         this.started = false;
     }
@@ -22,11 +20,8 @@ public class QuestLink {
     public Player getPlayer(){
         return p;
     }
-    public CIPlayer getBDDPlayer(){
-        return player;
-    }
-    public Quest getQuest(){
-        return quest;
+    public QuestList getQuest(){
+        return list;
     }
     public QuestTier getTier(){
         return tier;
