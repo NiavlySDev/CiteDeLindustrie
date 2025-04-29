@@ -3,6 +3,7 @@ package fr.niavlys.dev.ci.listeners;
 import fr.niavlys.dev.ci.donnees.BDD;
 import fr.niavlys.dev.ci.economy.convertisseur.ConvertisseurGUI;
 import fr.niavlys.dev.ci.players.CIPlayer;
+import fr.niavlys.dev.ci.quests.inventory.QuestGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +28,9 @@ public class GUIListener implements Listener {
 
         if(invTitle.equals(ConvertisseurGUI.getTitle())){
             ConvertisseurGUI.Action(e, p, player);
+        }
+        if(invTitle.equals(QuestGUI.getTitle())){
+            QuestGUI.Action(e, p, player);
         }
     }
 }

@@ -17,9 +17,9 @@ public class Reward {
     private BigNumbers money;
 
     public Reward() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null);
     }
-    private Reward(RewardType type, ItemStack item, String command, String message, BigNumbers money, Integer amount) {
+    public Reward(RewardType type, ItemStack item, String command, String message, BigNumbers money) {
         this.type = type;
         this.item = item;
         this.command = command;

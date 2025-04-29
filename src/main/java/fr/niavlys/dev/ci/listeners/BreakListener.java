@@ -8,17 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-public class Break implements Listener {
+public class BreakListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e){
         Player p = e.getPlayer();
         CIPlayer player = BDD.getPlayer(p.getUniqueId());
 
-        if(QuestManager.BreakQuest(e, p, player)){
-            return;
-        }
-
+        QuestManager.BreakQuest(e, p, player);
     }
 
 }
