@@ -47,7 +47,10 @@ public final class CiteIndustrie extends JavaPlugin {
         createEvent(new JoinEvent());
         createEvent(new LeaveEvent());
         createEvent(new OnMessage());
+        // Quests
         createEvent(new BreakListener());
+        createEvent(new WalkListener());
+        createEvent(new CraftListener());
 
         System.out.println("[" + name + " v" + version + "] Active.");
         System.out.println("[" + name + " v" + version + "] Developpe par " + author + ".");

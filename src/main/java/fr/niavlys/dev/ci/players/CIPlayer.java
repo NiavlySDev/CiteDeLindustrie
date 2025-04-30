@@ -86,8 +86,10 @@ public class CIPlayer {
         this.getBalance().getBronze().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.bronze.entier"), (String) players.get(this.uuid.toString(), "balance.bronze.sign")));
         this.getBalance().getArgent().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.argent.entier"), (String) players.get(this.uuid.toString(), "balance.argent.sign")));
         this.getBalance().getOr().set(new BigNumbers((Double) players.get(this.uuid.toString(), "balance.or.entier"), (String) players.get(this.uuid.toString(), "balance.or.sign")));
+
         BDD.addQuest(new QuestLink(Bukkit.getPlayer(this.getUuid()), QuestList.BreakStone, new QuestTier(10, 1024)));
         BDD.addQuest(new QuestLink(Bukkit.getPlayer(this.getUuid()), QuestList.BreakIron, new QuestTier(4, 512)));
+        BDD.addQuest(new QuestLink(Bukkit.getPlayer(this.getUuid()), QuestList.CraftCake, new QuestTier(3, 64)));
 
         for(QuestLink link : BDD.getQuestsByPlayer(Bukkit.getPlayer(this.getUuid()))){
             String questName = link.getQuest().getName();

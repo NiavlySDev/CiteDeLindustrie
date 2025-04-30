@@ -4,6 +4,7 @@ import fr.niavlys.dev.bn.main.BigNumbers;
 import fr.niavlys.dev.ci.quests.rewards.Reward;
 import fr.niavlys.dev.ci.quests.rewards.RewardType;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -25,6 +26,16 @@ public enum QuestList {
         List.of(
             new Reward(RewardType.Bronze, null, null, "+ 35 K Bronze", new BigNumbers(35, "K")),
             new Reward(RewardType.Argent, null, null, "+ 5 Argent", new BigNumbers(5))
+        )
+    ),
+    CraftCake(
+        QuestType.Crafting,
+        "Crafter des gâteaux",
+        Material.CAKE,
+        List.of(
+            new Reward(RewardType.Bronze, null, null, "+ 50 K Bronze", new BigNumbers(50, "K")),
+            new Reward(RewardType.Argent, null, null, "+ 10 Argent", new BigNumbers(10)),
+            new Reward(RewardType.Item, new ItemStack(Material.ANCIENT_DEBRIS, 2), null, "+ 2 Ancients Débrits", null)
         )
     )
     ;
